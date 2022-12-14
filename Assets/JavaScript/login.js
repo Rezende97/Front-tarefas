@@ -1,5 +1,3 @@
-import { api_request } from "./functions/api-request.js";
-
 const formData  = document.getElementById('formLogin');
 
 formData.addEventListener('submit', (e) => {
@@ -26,15 +24,27 @@ formData.addEventListener('submit', (e) => {
     }    
 
     const data = {
-        'name_user': formData.userEmail.value,
+        'email': formData.userEmail.value,
         'password_user': formData.password.value
     };
 
-    if (api_request(data, 'POST')) {
-        formData.userEmail.value = ''
-        formData.password.value  = ''
+    const url = "http://localhost/Projetos-pessoal/projetos-back-end/Api-tarefas/login"
+
+    fetch(url,{
+        method: 'POST',
+        body: new URLSearchParams(data)
+    })
+    .then(Response  => Response.json())
+    .then(data      => {
+
+        const localstoragesId = localStorage.setItem("id", data.id)
+        const localstorages = localStorage.setItem("acesso", data.user)
+
         window.location.href = "Assets/Paginas/tarefas.html"
-    } 
+    })
+    .catch(error    => console.error(error))
+
+    
 
 })
 
