@@ -1,7 +1,9 @@
 const id = localStorage.getItem("id")
 const nome = localStorage.getItem("acesso")
 
-if (nome) {
+if (!nome) {
+    window.location.href = '../../index.html';
+}else{
     tarefas();
 }
 
@@ -32,4 +34,4 @@ async function tarefas(){
         }        
     }    
 }
-    
+
